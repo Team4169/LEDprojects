@@ -63,7 +63,7 @@ void loop() {
 
   
   
-  flash(strip.Color(0, 255, 0), (123, 0, 0), 500);
+  flash(strip.Color(0, 0, 255), (123, 0, 0), 500);
   
   show_colors_and();
   
@@ -115,6 +115,7 @@ void random_color(){
       strip.show();
       delay(25);
     }
+    clear();
 
   }
   
@@ -148,6 +149,19 @@ void show_colors_and(){
   }
   
 }
+void clear(){
+  for (int i = 0; i<strip.numPixels(); i++){
+    strip.setPixelColor(i,0,0,0);
+  }
+  strip.show();
+}
+
+
+
+
+
+
+
 
 
 // Some functions of our own for creating animated effects -----------------

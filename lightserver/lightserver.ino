@@ -81,27 +81,32 @@ volatile boolean stop_animation = false;
 void receiveEvent(int howMany) {
   char command = Wire.read(); // receive the command (a single byte as a character)
   stop_animation = true; // cancel any previously running animation
+
+  clear();
+  create_headlights();
+  
   if (command == COMMAND1) {
-    allRed();
+    
   } else if (command == COMMAND2) {
-    allGreen();
+    brake_lights();
   } else if (command == COMMAND3) {
-    allBlue();
+    left_signal();
   } else if (command == COMMAND4) {
-    flashGreen();
+    right_signal();
   }
+  strip.show();
 }
 
-void allRed() {
-  allSameColor(255, 0, 0);
+void create_headlights() {
+    headlights();
 }
 
-void allGreen() {
-  allSameColor(0, 255, 0);
+void brake_lights() {
+  brake();
 }
 
 void allBlue() {
-  allSameColor(0, 0, 255);
+  left_signal();
 }
 
 void allPurple() {
@@ -140,7 +145,7 @@ boolean delayUnlessInterrupted(int delay_milliseconds) {
 void flashGreen() {
   stop_animation = false; // allow this animation to run forever -- until stop_animation is set to true
   while (1) {
-    allGreen();
+    //allGreen();
     if (delayUnlessInterrupted(100) == true) {
       return;
     }
@@ -149,4 +154,58 @@ void flashGreen() {
       return;
     }
   }
+}
+
+void headlights(){
+
+  for(int i =5;i<10; i++){
+    strip.setPixelColor(i,150, 100, 0);
+  }
+  for(int i=12; i<17; i++){
+    strip.setPixelColor(i, 150, 100, 0);
+  }
+  
+}
+
+void brake(){
+ 
+  for (int i = 49; i < 54; i ++){
+    strip.setPixelColor(i, 255, 0, 0);
+  }
+  for (int i = 56; i < 61; i++){
+    strip.setPixelColor(i, 255, 0, 0);
+  }
+  
+}
+
+void left_signal(){
+  
+  for(int i = 18; i < 26; i++){
+    strip.setPixelColor(i,255, 30, 0);
+  }
+ 
+  for(int i = 40; i < 49; i++){
+    strip.setPixelColor(i,255, 30, 0);
+  }
+}
+
+void right_signal(){
+  
+  for(int i = 0; i < 4; i++){
+    strip.setPixelColor(i,255, 30, 0);
+  }
+  for(int i = 85; i < 89; i++){
+    strip.setPixelColor(i,255, 30, 0);
+  }
+  for(int i = 62; i < 70; i++){
+    strip.setPixelColor(i,255, 30, 0);
+  }
+  
+}
+
+void clear(){
+  for(int i=0; i<strip.numPixels();i++){
+    strip.setPixelColor(i,0,0,0);
+  }
+  strip.show();
 }
