@@ -32,6 +32,7 @@ const char COMMAND4 = 4;
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
+#include <time.h>
 
 // define the pin that the LED strip is connected to
 #define LED_STRIP_PIN 6
@@ -86,9 +87,9 @@ void receiveEvent(int howMany) {
   create_headlights();
   
   if (command == COMMAND1) {
-    
+    light_display(false, false, true, false);
   } else if (command == COMMAND2) {
-    brake_lights();
+    setLights(true,true,true);
   } else if (command == COMMAND3) {
     left_signal();
   } else if (command == COMMAND4) {
@@ -96,6 +97,107 @@ void receiveEvent(int howMany) {
   }
   strip.show();
 }
+
+void setLights(bool brake, bool left, bool right) {
+  if (brake==true) {
+    for (int i = 49; i < 54; i ++){
+      strip.setPixelColor(i, 255, 0, 0);
+    }
+    for (int i = 56; i < 61; i++){
+    strip.setPixelColor(i, 255, 0, 0);
+    }
+  }
+  if (left==true){
+    for(int i = 18; i < 26; i++){
+      strip.setPixelColor(i,255, 30, 0);
+    }
+ 
+    for(int i = 40; i < 48; i++){
+      strip.setPixelColor(i,255, 30, 0);
+    }
+  }
+  if (right==true){
+    for(int i = 0; i < 4; i++){
+      strip.setPixelColor(i,255, 30, 0);
+    }
+    for(int i = 85; i < 89; i++){
+      strip.setPixelColor(i,255, 30, 0);
+    }
+    for(int i = 62; i < 70; i++){
+      strip.setPixelColor(i,255, 30, 0);
+    }
+  }
+}
+
+void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow){
+  if (green_flash){
+     greenflash();
+  }else if(redTrail){
+    redtrail();
+  }else if (blueline){
+    BlueLine();
+  }else if (rainbow){
+    rainbOw();
+  }
+}
+
+
+
+void rainbOw(){
+  
+}
+
+void BlueLine(){
+  int num = 5;
+  for (int i = 0;i<89; i++){
+    for (int i = num-5; i < num; i++){
+      strip.setPixelColor(i, 0,0, 255);
+      strip.show();
+    }
+    delay(20);
+    for  (int i = 0; i<100; i++){
+      strip.setPixelColor(i, 0, 0, 0);
+    }
+    strip.show();
+    num = num+1;
+  }
+}
+
+void redtrail(){
+  for (int i = 0; i < 4; i++){
+    for (int i = 0; i < 89; i ++){
+      strip.setPixelColor(i, 255,0, 0);
+      strip.show();
+      delay(10);
+    }
+    for (int i = 0; i < 89; i ++){
+      strip.setPixelColor(i, 0,0, 0);
+      strip.show();
+      delay(10);
+    }
+  }
+}
+
+void greenflash(){
+  for (int i=0;i<4;i++){
+    for  (int i = 0; i<89; i++){
+      strip.setPixelColor(i, 0, 255, 0);
+    }
+    strip.show();
+    delay(500);
+    for  (int i = 0; i<89; i++){
+      strip.setPixelColor(i, 0, 0, 0);
+    }
+    strip.show();
+    delay(500);
+  }  
+}
+
+
+
+
+
+
 
 void create_headlights() {
     headlights();
@@ -184,7 +286,7 @@ void left_signal(){
     strip.setPixelColor(i,255, 30, 0);
   }
  
-  for(int i = 40; i < 49; i++){
+  for(int i = 40; i < 48; i++){
     strip.setPixelColor(i,255, 30, 0);
   }
 }
@@ -202,6 +304,8 @@ void right_signal(){
   }
   
 }
+
+
 
 void clear(){
   for(int i=0; i<strip.numPixels();i++){
