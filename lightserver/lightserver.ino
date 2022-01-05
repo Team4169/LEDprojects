@@ -59,7 +59,8 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_PIXELS, LED_STRIP_PIN, NEO_GRB +
 void setup() {
   Wire.begin(SLAVE_ADDRESS);    // join i2c bus, using the specified address as ours
   Wire.onReceive(receiveEvent); // register event
-  //Serial.begin(9600);           // start serial for debugging output
+  Serial.begin(9600);           // start serial for debugging output
+  Serial.println("Setting up");
 
   // now initialize the LED strip
   strip.begin();
@@ -82,10 +83,21 @@ volatile boolean stop_animation = false;
 void receiveEvent(int howMany) {
   char command = Wire.read(); // receive the command (a single byte as a character)
   stop_animation = true; // cancel any previously running animation
-
+  char secondcommand = Wire.read();
+  Serial.println(howMany);
+  Serial.println(command);
+  Serial.println(secondcommand);
   clear();
+//   if (command == COMMAND1) {
+//    headlights();
+//    } else if (command == COMMAND2) {
+//      break();
+//    } else if (command == COMMAND3) {
+//      left_signal();
+//    } else if (command == COMMAND4) {
+//      right_signal();
+//    }
   create_headlights();
-  
   if (command == COMMAND1) {
     light_display(false, false, true, false);
   } else if (command == COMMAND2) {
