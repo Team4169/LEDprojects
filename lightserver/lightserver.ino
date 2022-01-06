@@ -81,11 +81,12 @@ volatile boolean stop_animation = false;
 // this function executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
-  char command = Wire.read(); // receive the command (a single byte as a character)
+  int command = Wire.read(); // receive the command (a single byte as a character)
   stop_animation = true; // cancel any previously running animation
 //  char secondcommand = Wire.read();
   Serial.print("howMany: ");
   Serial.println(howMany);
+  Serial.print("recieved: ");
   Serial.println(command);
 //  Serial.println(secondcommand);
   clear();
