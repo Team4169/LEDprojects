@@ -83,10 +83,11 @@ volatile boolean stop_animation = false;
 void receiveEvent(int howMany) {
   char command = Wire.read(); // receive the command (a single byte as a character)
   stop_animation = true; // cancel any previously running animation
-  char secondcommand = Wire.read();
+//  char secondcommand = Wire.read();
+  Serial.print("howMany: ");
   Serial.println(howMany);
   Serial.println(command);
-  Serial.println(secondcommand);
+//  Serial.println(secondcommand);
   clear();
 //   if (command == COMMAND1) {
 //    headlights();
