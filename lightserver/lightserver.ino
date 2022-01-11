@@ -54,7 +54,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_PIXELS, LED_STRIP_PIN, NEO_GRB +
 // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
 // and minimize distance between Arduino and first pixel.  Avoid connecting
 // on a live circuit...if you must, connect GND first.
-
+#include <stdlib.h> 
 
 void setup() {
   Wire.begin(SLAVE_ADDRESS);    // join i2c bus, using the specified address as ours
@@ -156,9 +156,109 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow)
 }
 
 
-
+int convertB(int hue, int S, int V){
+  int C = V * S;
+  int X = C * (1 - abs(hue / 60 % 2 -1));
+  int m = V-C;
+  int R = 0;
+  int G = 0;
+  int B = 8;
+  if ( <= hue && hue < 60){
+      R = C;
+      G = X;}
+  else if( 60 <= hue && hue < 120){
+      R = X;
+      G = C;}
+  else if ( 120 <= hue && hue < 180){
+      G = C;
+      B = X;}
+  else if ( 180 <= hue && hue < 240){
+      G = X;
+      B = C;}
+  else if ( 240 <= hue && hue < 300){
+      R = X;
+      B = C;}
+  else if ( 300 <= hue && hue < 360){
+      R = C;
+      B = X;}
+  return R,G,B;
+  }
+}
+int convertG(int hue, int S, int V){
+  int C = V * S;
+  int X = C * (1 - abs(hue / 60 % 2 -1));
+  int m = V-C;
+  int R = 0;
+  int G = 0;
+  int B = 8;
+  if ( <= hue && hue < 60){
+      R = C;
+      G = X;}
+  else if( 60 <= hue && hue < 120){
+      R = X;
+      G = C;}
+  else if ( 120 <= hue && hue < 180){
+      G = C;
+      B = X;}
+  else if ( 180 <= hue && hue < 240){
+      G = X;
+      B = C;}
+  else if ( 240 <= hue && hue < 300){
+      R = X;
+      B = C;}
+  else if ( 300 <= hue && hue < 360){
+      R = C;
+      B = X;}
+  return R,G,B;
+  }
+}
+int convertR(int hue, int S, int V){
+  int C = V * S;
+  int X = C * (1 - abs(hue / 60 % 2 -1));
+  int m = V-C;
+  int R = 0;
+  int G = 0;
+  int B = 8;
+  if ( <= hue && hue < 60){
+      R = C;
+      G = X;}
+  else if( 60 <= hue && hue < 120){
+      R = X;
+      G = C;}
+  else if ( 120 <= hue && hue < 180){
+      G = C;
+      B = X;}
+  else if ( 180 <= hue && hue < 240){
+      G = X;
+      B = C;}
+  else if ( 240 <= hue && hue < 300){
+      R = X;
+      B = C;}
+  else if ( 300 <= hue && hue < 360){
+      R = C;
+      B = X;}
+  return R,G,B;
+  }
+}
 void rainbOw(){
-  
+  bool rainbow = true;
+  int hue = 0;
+  int pix = 0;
+  while (rainbow) {
+    if (hue > 360){
+      hue = 0;
+    }
+    if (pix > 150) {
+      pix = 0;
+    }
+    int R = convertR(hue);
+    int G = convertG(hue);
+    int B = convertB(hue);
+    strip.setPixelColor(pix, R,G, B);
+    strip.show();
+  pix++;
+  hue++;
+  }
 }
 
 void BlueLine(){
@@ -206,10 +306,6 @@ void greenflash(){
     delay(500);
   }  
 }
-
-
-
-
 
 
 
