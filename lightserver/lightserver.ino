@@ -101,7 +101,7 @@ void receiveEvent(int howMany) {
 //    }
   create_headlights();
   if (command == COMMAND1) {
-    light_display(false, false, true, false);
+    light_display(false, false, false, false, true);
   } else if (command == COMMAND2) {
     setLights(true,true,true);
   } else if (command == COMMAND3) {
@@ -143,15 +143,17 @@ void setLights(bool brake, bool left, bool right) {
   }
 }
 
-void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow){
+void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow, bool fade){
   if (green_flash){
-     greenflash();
+    greenflash();
   }else if(redTrail){
     redtrail();
   }else if (blueline){
     BlueLine();
   }else if (rainbow){
     rainbOw();
+  } else if (fade){
+    fade();
   }
 }
 
@@ -326,4 +328,63 @@ void clear(){
     strip.setPixelColor(i,0,0,0);
   }
   strip.show();
+}
+
+
+
+void redtoyellow(){
+  for(int i=0, i<256; i++){
+    allSameColor(255, i, 0)
+    delay(4)
+  }
+  strip.show()
+}
+
+void yellowtowhite(){
+  for(int i=0, i<256, i++){
+    allSameColor(255, 255, i)
+    delay(4)
+  }
+  strip.show()
+}
+
+void whitetocyan(){
+  for(int i=0, i<256, i++){
+    allSameColor(255-i, 255, 255)
+    delay(4)
+  }
+  strip.show()
+}
+
+void cyantoblue(){
+  for(int i=0, i<256, i++){
+    allSameColor(0, 255-i, 255)
+    delay(4)
+  }
+  strip.show()
+}
+
+void bluetoblack(){
+  for(int i=0, i<256, i++){
+    allSameColor(0, 0, 255-i)
+    delay(4)
+  }
+  strip.show()
+}
+
+void blacktored(){
+  for(int i=0, i<256, i++){
+    allSameColor(i, 0, 0)
+    delay(4)
+  }
+  strip.show()
+}
+
+void fade(){
+  redtoyellow()
+  yellowtowhite()
+  whitetocyan()
+  cyantoblue()
+  bluetoblack()
+  blacktored()
 }
