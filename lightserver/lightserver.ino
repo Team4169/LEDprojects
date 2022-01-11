@@ -66,7 +66,7 @@ void setup() {
   strip.begin();
   strip.setBrightness(50);
   strip.show(); // Initialize all pixels to 'off'
-  allPurple();
+ 
 }
 
 void loop() {
@@ -101,7 +101,7 @@ void receiveEvent(int howMany) {
 //    }
   create_headlights();
   if (command == COMMAND1) {
-    light_display(false, false, true, false);
+    light_display(false, false, false, true);
   } else if (command == COMMAND2) {
     setLights(true,true,true);
   } else if (command == COMMAND3) {
@@ -163,7 +163,7 @@ int convertB(int hue, int S, int V){
   int R = 0;
   int G = 0;
   int B = 8;
-  if ( <= hue && hue < 60){
+  if (0 <= hue && hue < 60){
       R = C;
       G = X;}
   else if( 60 <= hue && hue < 120){
@@ -191,7 +191,7 @@ int convertG(int hue, int S, int V){
   int R = 0;
   int G = 0;
   int B = 8;
-  if ( <= hue && hue < 60){
+  if ( 0 <= hue && hue < 60){
       R = C;
       G = X;}
   else if( 60 <= hue && hue < 120){
@@ -219,7 +219,7 @@ int convertR(int hue, int S, int V){
   int R = 0;
   int G = 0;
   int B = 8;
-  if ( <= hue && hue < 60){
+  if ( 0 <= hue && hue < 60){
       R = C;
       G = X;}
   else if( 60 <= hue && hue < 120){
