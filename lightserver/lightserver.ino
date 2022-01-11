@@ -94,7 +94,13 @@ void receiveEvent(int howMany) {
   create_headlights();
   if (command == COMMAND1) {
     // allSameColor(0, 255, 0)
-
+    for (int r = 0; r < 255; r+5) {
+      for (int g = 0; g < 255; g+5) {
+        for (int b = 0; b < 255; b+5) {
+          trail(r, g, b, 1);
+        }
+      }
+    }
   } else if (command == COMMAND2) {
     setLights(true, true, true);
   } else if (command == COMMAND3) {
@@ -136,11 +142,11 @@ void setLights(bool brake, bool left, bool right) {
   }
 }
 
-void line() {
+void line(int red, int green, int blue, int loop) {
   int num = 5;
   for (int i = 0; i < 89; i++) {
     for (int i = num - 5; i < num; i++) {
-      strip.setPixelColor(i, 0, 0, 255);
+      strip.setPixelColor(i, red, green, blue);
       strip.show();
     }
     delay(20);
@@ -153,9 +159,9 @@ void line() {
 }
 
 void trail(int red, int green, int blue, int loop) {
-  for (int i = 0; i < 4; i++) {
+  for (int a = 0; a < loop; a++) {
     for (int i = 0; i < 89; i ++) {
-      strip.setPixelColor(i, 255, 0, 0);
+      strip.setPixelColor(i, red, green, blue);
       strip.show();
       delay(10);
     }
