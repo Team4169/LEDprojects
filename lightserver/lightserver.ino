@@ -153,7 +153,7 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow,
   }else if (rainbow){
     rainbOw();
   } else if (fade){
-    fade();
+      fde();
   }
 }
 
@@ -333,58 +333,58 @@ void clear(){
 
 
 void redtoyellow(){
-  for(int i=0, i<256; i++){
-    allSameColor(255, i, 0)
-    delay(4)
+  for(int i=0; i<256; i++){
+    allSameColor(255, i, 0);
+    delay(4);
   }
-  strip.show()
+  strip.show();
 }
 
 void yellowtowhite(){
-  for(int i=0, i<256, i++){
-    allSameColor(255, 255, i)
-    delay(4)
+  for(int i=0; i<256; i++){
+    allSameColor(255, 255, i);
+    delay(4);
   }
-  strip.show()
+  strip.show();
 }
 
 void whitetocyan(){
-  for(int i=0, i<256, i++){
-    allSameColor(255-i, 255, 255)
-    delay(4)
+  for(int i=0; i<256; i++){
+    allSameColor(255-i, 255, 255);
+    delay(4);
   }
-  strip.show()
+  strip.show();
 }
 
 void cyantoblue(){
-  for(int i=0, i<256, i++){
-    allSameColor(0, 255-i, 255)
-    delay(4)
+  for(int i=0; i<256; i++){
+    allSameColor(0, 255-i, 255);
+    delay(4);
   }
-  strip.show()
+  strip.show();
 }
 
 void bluetoblack(){
-  for(int i=0, i<256, i++){
-    allSameColor(0, 0, 255-i)
-    delay(4)
+  for(int i=0; i<256; i++){
+    allSameColor(0, 0, 255-i);
+    delay(4);
   }
-  strip.show()
+  strip.show();
 }
 
 void blacktored(){
-  for(int i=0, i<256, i++){
-    allSameColor(i, 0, 0)
-    delay(4)
+  for(int i=0; i<256; i++){
+    allSameColor(i, 0, 0);
+    delay(4);
   }
-  strip.show()
+  strip.show();
 }
 
-void fade(){
-  redtoyellow()
-  yellowtowhite()
-  whitetocyan()
-  cyantoblue()
-  bluetoblack()
-  blacktored()
+void fde(){
+  redtoyellow();
+  yellowtowhite();
+  whitetocyan();
+  cyantoblue();
+  bluetoblack();
+  blacktored();
 }
