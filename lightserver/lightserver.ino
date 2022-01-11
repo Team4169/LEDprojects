@@ -7,7 +7,7 @@
 // Background info at: https://docs.arduino.cc/learn/communication/wire
 //
 
-// The Wire Library implements the I2C communiation protocol between a 
+// The Wire Library implements the I2C communiation protocol between a
 // controller ("master") and a peripheral ("slave")
 #include <Wire.h>
 
@@ -30,7 +30,7 @@ const char COMMAND4 = 4;
 // the Adafruit_NeoPixel library is used to control our LED strips
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
-  #include <avr/power.h>
+#include <avr/power.h>
 #endif
 #include <time.h>
 
@@ -66,7 +66,7 @@ void setup() {
   strip.begin();
   strip.setBrightness(50);
   strip.show(); // Initialize all pixels to 'off'
-  allPurple();
+  allSameColor(255, 0, 255); // all purple
 }
 
 void loop() {
@@ -78,32 +78,25 @@ void loop() {
 
 volatile boolean stop_animation = false;
 
+
 // this function executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
   int command = Wire.read(); // receive the command (a single byte as a character)
   stop_animation = true; // cancel any previously running animation
-//  char secondcommand = Wire.read();
+  //  char secondcommand = Wire.read();
   Serial.print("howMany: ");
   Serial.println(howMany);
   Serial.print("recieved: ");
   Serial.println(command);
-//  Serial.println(secondcommand);
+  //  Serial.println(secondcommand);
   clear();
-//   if (command == COMMAND1) {
-//    headlights();
-//    } else if (command == COMMAND2) {
-//      break();
-//    } else if (command == COMMAND3) {
-//      left_signal();
-//    } else if (command == COMMAND4) {
-//      right_signal();
-//    }
   create_headlights();
   if (command == COMMAND1) {
-    light_display(false, false, true, false);
+    // allSameColor(0, 255, 0)
+
   } else if (command == COMMAND2) {
-    setLights(true,true,true);
+    setLights(true, true, true);
   } else if (command == COMMAND3) {
     left_signal();
   } else if (command == COMMAND4) {
@@ -113,128 +106,69 @@ void receiveEvent(int howMany) {
 }
 
 void setLights(bool brake, bool left, bool right) {
-  if (brake==true) {
-    for (int i = 49; i < 54; i ++){
+  if (brake == true) {
+    for (int i = 49; i < 54; i ++) {
       strip.setPixelColor(i, 255, 0, 0);
     }
-    for (int i = 56; i < 61; i++){
-    strip.setPixelColor(i, 255, 0, 0);
+    for (int i = 56; i < 61; i++) {
+      strip.setPixelColor(i, 255, 0, 0);
     }
   }
-  if (left==true){
-    for(int i = 18; i < 26; i++){
-      strip.setPixelColor(i,255, 30, 0);
+  if (left == true) {
+    for (int i = 18; i < 26; i++) {
+      strip.setPixelColor(i, 255, 30, 0);
     }
- 
-    for(int i = 40; i < 48; i++){
-      strip.setPixelColor(i,255, 30, 0);
-    }
-  }
-  if (right==true){
-    for(int i = 0; i < 4; i++){
-      strip.setPixelColor(i,255, 30, 0);
-    }
-    for(int i = 85; i < 89; i++){
-      strip.setPixelColor(i,255, 30, 0);
-    }
-    for(int i = 62; i < 70; i++){
-      strip.setPixelColor(i,255, 30, 0);
-    }
-  }
-}
 
-void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow){
-  if (green_flash){
-     greenflash();
-  }else if(redTrail){
-    redtrail();
-  }else if (blueline){
-    BlueLine();
-  }else if (rainbow){
-    rainbOw();
+    for (int i = 40; i < 48; i++) {
+      strip.setPixelColor(i, 255, 30, 0);
+    }
+  }
+  if (right == true) {
+    for (int i = 0; i < 4; i++) {
+      strip.setPixelColor(i, 255, 30, 0);
+    }
+    for (int i = 85; i < 89; i++) {
+      strip.setPixelColor(i, 255, 30, 0);
+    }
+    for (int i = 62; i < 70; i++) {
+      strip.setPixelColor(i, 255, 30, 0);
+    }
   }
 }
 
-
-
-void rainbOw(){
-  
-}
-
-void BlueLine(){
+void line() {
   int num = 5;
-  for (int i = 0;i<89; i++){
-    for (int i = num-5; i < num; i++){
-      strip.setPixelColor(i, 0,0, 255);
+  for (int i = 0; i < 89; i++) {
+    for (int i = num - 5; i < num; i++) {
+      strip.setPixelColor(i, 0, 0, 255);
       strip.show();
     }
     delay(20);
-    for  (int i = 0; i<100; i++){
+    for  (int i = 0; i < 100; i++) {
       strip.setPixelColor(i, 0, 0, 0);
     }
     strip.show();
-    num = num+1;
+    num = num + 1;
   }
 }
 
-void redtrail(){
-  for (int i = 0; i < 4; i++){
-    for (int i = 0; i < 89; i ++){
-      strip.setPixelColor(i, 255,0, 0);
+void trail(int red, int green, int blue, int loop) {
+  for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 89; i ++) {
+      strip.setPixelColor(i, 255, 0, 0);
       strip.show();
       delay(10);
     }
-    for (int i = 0; i < 89; i ++){
-      strip.setPixelColor(i, 0,0, 0);
-      strip.show();
-      delay(10);
-    }
-  }
-}
-
-void greenflash(){
-  for (int i=0;i<4;i++){
-    for  (int i = 0; i<89; i++){
-      strip.setPixelColor(i, 0, 255, 0);
-    }
-    strip.show();
-    delay(500);
-    for  (int i = 0; i<89; i++){
+    for (int i = 0; i < 89; i ++) {
       strip.setPixelColor(i, 0, 0, 0);
+      strip.show();
+      delay(10);
     }
-    strip.show();
-    delay(500);
-  }  
-}
-
-
-
-
-
-
-
-void create_headlights() {
-    headlights();
-}
-
-void brake_lights() {
-  brake();
-}
-
-void allBlue() {
-  left_signal();
-}
-
-void allPurple() {
-  allSameColor(255, 0, 255);
-}
-
-void allBlack() {
-  allSameColor(0, 0, 0);
+  }
 }
 
 void allSameColor(int red, int green, int blue) {
-  for(int i=0; i<strip.numPixels(); i++) {
+  for (int i = 0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, strip.Color(red, green, blue));
   }
   strip.show();
@@ -246,7 +180,7 @@ boolean delayUnlessInterrupted(int delay_milliseconds) {
   // However, if at some point during this delay,
   // stop_animation is set to true, then this function
   // will immediately be interrupted and return true.
-  
+
   unsigned long start_millis = millis();
   while (true) {
     if (stop_animation) {
@@ -258,72 +192,68 @@ boolean delayUnlessInterrupted(int delay_milliseconds) {
   }
 }
 
-void flashGreen() {
-  stop_animation = false; // allow this animation to run forever -- until stop_animation is set to true
-  while (1) {
-    //allGreen();
-    if (delayUnlessInterrupted(100) == true) {
-      return;
+void flash(int red, int green, int blue, int loops) {
+  for (int i = 0; i < loops; i++) {
+    for  (int i = 0; i < 89; i++) {
+      strip.setPixelColor(red, green, blue, 0);
     }
-    allBlack();
-    if (delayUnlessInterrupted(100) == true) {
-      return;
+    strip.show();
+    delay(500);
+    for  (int i = 0; i < 89; i++) {
+      strip.setPixelColor(i, 0, 0, 0);
     }
+    strip.show();
+    delay(500);
   }
 }
 
-void headlights(){
+void create_headlights() {
+  headlights();
+}
 
-  for(int i =5;i<10; i++){
-    strip.setPixelColor(i,150, 100, 0);
-  }
-  for(int i=12; i<17; i++){
+void headlights() {
+  for (int i = 5; i < 10; i++) {
     strip.setPixelColor(i, 150, 100, 0);
   }
-  
+  for (int i = 12; i < 17; i++) {
+    strip.setPixelColor(i, 150, 100, 0);
+  }
 }
 
-void brake(){
- 
-  for (int i = 49; i < 54; i ++){
+void brake() {
+  for (int i = 49; i < 54; i ++) {
     strip.setPixelColor(i, 255, 0, 0);
   }
-  for (int i = 56; i < 61; i++){
+  for (int i = 56; i < 61; i++) {
     strip.setPixelColor(i, 255, 0, 0);
   }
-  
 }
 
-void left_signal(){
-  
-  for(int i = 18; i < 26; i++){
-    strip.setPixelColor(i,255, 30, 0);
+void left_signal() {
+  for (int i = 18; i < 26; i++) {
+    strip.setPixelColor(i, 255, 30, 0);
   }
- 
-  for(int i = 40; i < 48; i++){
-    strip.setPixelColor(i,255, 30, 0);
+  for (int i = 40; i < 48; i++) {
+    strip.setPixelColor(i, 255, 30, 0);
   }
 }
 
-void right_signal(){
-  
-  for(int i = 0; i < 4; i++){
-    strip.setPixelColor(i,255, 30, 0);
+void right_signal() {
+  for (int i = 0; i < 4; i++) {
+    strip.setPixelColor(i, 255, 30, 0);
   }
-  for(int i = 85; i < 89; i++){
-    strip.setPixelColor(i,255, 30, 0);
+  for (int i = 85; i < 89; i++) {
+    strip.setPixelColor(i, 255, 30, 0);
   }
-  for(int i = 62; i < 70; i++){
-    strip.setPixelColor(i,255, 30, 0);
+  for (int i = 62; i < 70; i++) {
+    strip.setPixelColor(i, 255, 30, 0);
   }
-  
+
 }
 
-
-
-void clear(){
-  for(int i=0; i<strip.numPixels();i++){
-    strip.setPixelColor(i,0,0,0);
+void clear() {
+  for (int i = 0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, 0, 0, 0);
   }
   strip.show();
 }
