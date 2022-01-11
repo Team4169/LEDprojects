@@ -101,13 +101,13 @@ void receiveEvent(int howMany) {
 //    }
   create_headlights();
   if (command == COMMAND1) {
-    light_display(false, false, true, false);
+    light_display(true, false, false, false);
   } else if (command == COMMAND2) {
     setLights(true,true,true);
   } else if (command == COMMAND3) {
     left_signal();
   } else if (command == COMMAND4) {
-    rainb0w();
+    colored_lights();
   }
   strip.show();
 }
@@ -145,33 +145,34 @@ void setLights(bool brake, bool left, bool right) {
 
 void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow){
   if (green_flash){
-     greenflash();
+     colored_lights();
   }else if(redTrail){
     redtrail();
   }else if (blueline){
     BlueLine();
   }else if (rainbow){
-    rainbOw();
+    colored_lights();
   }
 }
 
 
 
-void rainbOw(){
+void colored_lights(){
   int offset = 0;
   int temp = 0;
-  while true{
+  while (true){
     for(int i = 0; i<149; i++){
-      temp = i+offset
+      temp = i+offset;
       if(offset > 149){
         offset = 0;
       }
       if(temp >= 150){
         temp -= 149;
       }
-      strip.setPixelColor(i, 255, 255, 255*temp/149)
+      strip.setPixelColor(i, 255, 255, 255*temp/149);
     }
-    wait(200);
+    strip.show();
+    delay(200);
   }
 }
 
