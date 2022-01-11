@@ -67,6 +67,7 @@ void setup() {
   strip.setBrightness(50);
   strip.show(); // Initialize all pixels to 'off'
   allPurple();
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -147,7 +148,7 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow)
   if (green_flash){
      greenflash();
   }else if(redTrail){
-    redtrail();
+    bounce();
   }else if (blueline){
     BlueLine();
   }else if (rainbow){
@@ -161,41 +162,82 @@ void Come(){
       strip.setPixelColor(i, 222,16, 95);
       strip.setPixelColor(150-i, 222, 16, 95);
       strip.show();
-      delay(5);
+      delay(15);
     }
-    for (int i = 75; i < 0; i--){
+    for (int i = 75; i > 0; i--){
       strip.setPixelColor(i, 0,0, 0);
       strip.setPixelColor(150-i, 0, 0, 0);
       strip.show();
-      delay(5);
+      delay(15);
     }
+    clear();
   }
 }
 
 void bounce(){
-  for (int i = 0; i < 75, i ++){
+  for (int i = 0; i < 75; i++){
     strip.setPixelColor(i, 255,0, 0);
     strip.setPixelColor(150-i, 255, 0, 0);
     strip.show();
-    delay(5);
+    delay(50);
     clear();
   }
-  for (int i = 75; i < 38; i--){
+  for (int i = 75; i > 38; i--){
     strip.setPixelColor(i, 255, 0,0);
     strip.setPixelColor(150-i, 255,0, 0);
     strip.show();
-    strip.delay(5);
+    delay(50);
     clear();
   }
-  for (int i = 75; i < 38; i--){
+  for (int i = 38; i < 75; i++){
     strip.setPixelColor(i, 255, 0,0);
     strip.setPixelColor(150-i, 255,0, 0);
     strip.show();
-    strip.delay(5);
+    delay(50);
     clear();
   }
-  
-
+  for (int i = 75; i > 57; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 57; i < 75; i++){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 75; i > 67; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 67; i < 75; i++){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 75; i > 72; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 72; i < 75; i++){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
 }
 
 void rainbOw(){
