@@ -101,7 +101,7 @@ void receiveEvent(int howMany) {
 //    }
   create_headlights();
   if (command == COMMAND1) {
-    light_display(false, false, true, false);
+    light_display(false, false, false, true);
   } else if (command == COMMAND2) {
     setLights(true,true,true);
   } else if (command == COMMAND3) {
@@ -151,11 +151,52 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow)
   }else if (blueline){
     BlueLine();
   }else if (rainbow){
-    rainbOw();
+    Come();
   }
 }
 
+void Come(){
+  for (int i = 0; i < 3; i ++){
+    for (int i = 0; i < 75; i++){
+      strip.setPixelColor(i, 222,16, 95);
+      strip.setPixelColor(150-i, 222, 16, 95);
+      strip.show();
+      delay(5);
+    }
+    for (int i = 75; i < 0; i--){
+      strip.setPixelColor(i, 0,0, 0);
+      strip.setPixelColor(150-i, 0, 0, 0);
+      strip.show();
+      delay(5);
+    }
+  }
+}
 
+void bounce(){
+  for (int i = 0; i < 75, i ++){
+    strip.setPixelColor(i, 255,0, 0);
+    strip.setPixelColor(150-i, 255, 0, 0);
+    strip.show();
+    delay(5);
+    clear();
+  }
+  for (int i = 75; i < 38; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    strip.delay(5);
+    clear();
+  }
+  for (int i = 75; i < 38; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    strip.delay(5);
+    clear();
+  }
+  
+
+}
 
 void rainbOw(){
   
@@ -206,11 +247,6 @@ void greenflash(){
     delay(500);
   }  
 }
-
-
-
-
-
 
 
 void create_headlights() {
