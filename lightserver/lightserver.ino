@@ -107,7 +107,7 @@ void receiveEvent(int howMany) {
   } else if (command == COMMAND3) {
     left_signal();
   } else if (command == COMMAND4) {
-    right_signal();
+    rainb0w();
   }
   strip.show();
 }
@@ -158,7 +158,21 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow)
 
 
 void rainbOw(){
-  
+  int offset = 0;
+  int temp = 0;
+  while true{
+    for(int i = 0; i<149; i++){
+      temp = i+offset
+      if(offset > 149){
+        offset = 0;
+      }
+      if(temp >= 150){
+        temp -= 149;
+      }
+      strip.setPixelColor(i, 255, 255, 255*temp/149)
+    }
+    wait(200);
+  }
 }
 
 void BlueLine(){
