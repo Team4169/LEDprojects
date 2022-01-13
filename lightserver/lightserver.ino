@@ -102,7 +102,7 @@ void receiveEvent(int howMany) {
 //    }
   create_headlights();
   if (command == COMMAND1) {
-    light_display(false, false, false, false, true);
+    light_display(false, false, false, false, false, true);
   } else if (command == COMMAND2) {
     setLights(true,true,true);
   } else if (command == COMMAND3) {
@@ -144,7 +144,7 @@ void setLights(bool brake, bool left, bool right) {
   }
 }
 
-void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow, bool pOrtals){
+void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow, bool pOrtals, bool $witch){
   if (green_flash){
     greenflash();
   }else if(redTrail){
@@ -155,6 +155,25 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow,
     Come();
   }else if (pOrtals){
     portals();
+  }else if ($witch){
+    switch();
+  }
+}
+
+void switch(){
+  int pixel = 0;
+  int switch = 0;
+  for (int i = 0; i < 7; i++){
+    if (switch % 2 = 0){
+      strip.setPixelColor(pixel, 255, 0, 0);
+    }else{
+      strip.setPixelColor(pixel, 0, 0, 0);
+    }
+    strip.show();
+    delay(30);
+    if (pixel % 25 == 0){
+      switch += 1;
+    }
   }
 }
 
