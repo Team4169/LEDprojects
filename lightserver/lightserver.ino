@@ -162,33 +162,34 @@ void portals(){
   int portal1;
   int portal2;
 
-  for (int i = 0, i < 3; i++){
-    portal1 = random(5, 70);
-    portal2 = random(80, 145);
-    strip.setPixelColor(portal1, 150, 0, 255);
-    strip.setPixelColor(portal2, 150, 0, 255);
+  while(true){
+    portal1 = random(20, 70);
+    portal2 = random(80, 130);
+    strip.setPixelColor(portal1, 255, 0, 50);
+    strip.setPixelColor(portal2, 255, 0, 50);
     strip.show();
 
     for (int i = 0; i < portal1; i++){
       strip.setPixelColor(i, 0, 0, 200);
       strip.show();
-      delay(50);
+      delay(20);
     }
-    for (int i = portal2; i < 150; i++){
-      strip.setPixelColor(i, 150, 0, 200);
+    for (int i = portal2+1; i < 150; i++){
+      strip.setPixelColor(i, 0, 0, 200);
       strip.show();
-      delay(50);
+      delay(20);
     }
     for (int i = 0; i < portal1; i++){
       strip.setPixelColor(i, 0, 0, 0);
       strip.show();
-      delay(50);
+      delay(20);
     }
-    for (int i = portal2; i < 150; i++){
-      strip.setPixelColor(i, 150, 0, 0);
+    for (int i = portal2+1; i < 150; i++){
+      strip.setPixelColor(i, 0, 0, 0);
       strip.show();
-      delay(50);
+      delay(20);
     }
+    clear();
   } 
 }
 
