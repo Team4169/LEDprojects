@@ -101,7 +101,7 @@ void receiveEvent(int howMany) {
 //    }
   create_headlights();
   if (command == COMMAND1) {
-    light_display(false, false, false, true);
+    light_display(false, false, false, false, true);
   } else if (command == COMMAND2) {
     setLights(true,true,true);
   } else if (command == COMMAND3) {
@@ -143,17 +143,54 @@ void setLights(bool brake, bool left, bool right) {
   }
 }
 
-void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow){
+void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow, bool pOrtals){
   if (green_flash){
-     greenflash();
+    greenflash();
   }else if(redTrail){
-    redtrail();
+    bounce();
   }else if (blueline){
     BlueLine();
   }else if (rainbow){
     Come();
+  }else if (pOrtals){
+    portals();
   }
 }
+
+void portals(){
+  int portal1;
+  int portal2;
+
+  for (int i = 0, i < 3; i++){
+    portal1 = random(5, 70);
+    portal2 = random(80, 145);
+    strip.setPixelColor(portal1, 150, 0, 255);
+    strip.setPixelColor(portal2, 150, 0, 255);
+    strip.show();
+
+    for (int i = 0; i < portal1; i++){
+      strip.setPixelColor(i, 0, 0, 200);
+      strip.show();
+      delay(50);
+    }
+    for (int i = portal2; i < 150; i++){
+      strip.setPixelColor(i, 150, 0, 200);
+      strip.show();
+      delay(50);
+    }
+    for (int i = 0; i < portal1; i++){
+      strip.setPixelColor(i, 0, 0, 0);
+      strip.show();
+      delay(50);
+    }
+    for (int i = portal2; i < 150; i++){
+      strip.setPixelColor(i, 150, 0, 0);
+      strip.show();
+      delay(50);
+    }
+  } 
+}
+
 
 void Come(){
   for (int i = 0; i < 3; i ++){
@@ -161,41 +198,82 @@ void Come(){
       strip.setPixelColor(i, 222,16, 95);
       strip.setPixelColor(150-i, 222, 16, 95);
       strip.show();
-      delay(5);
+      delay(15);
     }
     for (int i = 75; i < 0; i--){
       strip.setPixelColor(i, 0,0, 0);
       strip.setPixelColor(150-i, 0, 0, 0);
       strip.show();
-      delay(5);
+      delay(15);
     }
+    clear();
   }
 }
 
 void bounce(){
-  for (int i = 0; i < 75, i ++){
+  for (int i = 0; i < 75; i++){
     strip.setPixelColor(i, 255,0, 0);
     strip.setPixelColor(150-i, 255, 0, 0);
     strip.show();
-    delay(5);
+    delay(50);
     clear();
   }
-  for (int i = 75; i < 38; i--){
+  for (int i = 75; i > 38; i--){
     strip.setPixelColor(i, 255, 0,0);
     strip.setPixelColor(150-i, 255,0, 0);
     strip.show();
-    strip.delay(5);
+    delay(50);
     clear();
   }
-  for (int i = 75; i < 38; i--){
+  for (int i = 38; i < 75; i++){
     strip.setPixelColor(i, 255, 0,0);
     strip.setPixelColor(150-i, 255,0, 0);
     strip.show();
-    strip.delay(5);
+    delay(50);
     clear();
   }
-  
-
+  for (int i = 75; i > 57; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 57; i < 75; i++){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 75; i > 67; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 67; i < 75; i++){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 75; i > 72; i--){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
+  for (int i = 72; i < 75; i++){
+    strip.setPixelColor(i, 255, 0,0);
+    strip.setPixelColor(150-i, 255,0, 0);
+    strip.show();
+    delay(50);
+    clear();
+  }
 }
 
 void rainbOw(){
