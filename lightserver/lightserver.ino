@@ -330,12 +330,20 @@ void clear(){
 
 void cascading(){
   for(int i =0; i<strip.numPixels(); i++){
-    strip.setPixelcolor(i, 235, 64, 52)
-    strip.setPixelcolor(i + 1, 235, 64, 52)
-    strip.setPixelcolor(i + 2, 235, 64, 52)
-    int end = strip.NumPixels - i
-    strip.setPixelcolor(end, 52, 235, 229)
-    strip.setPixelcolor(end - 1, 52, 235, 229)
-    strip.setPixelcolor(end - 2, 52, 235, 229)
+    strip.setPixelColor(i, 235, 64, 52);
+    strip.setPixelColor(i + 1, 235, 64, 52);
+    strip.setPixelColor(i + 2, 235, 64, 52);
+    
+   
+    int End = strip.numPixels() - i;
+    strip.setPixelColor(End, 52, 235, 229);
+    strip.setPixelColor(End - 1, 52, 235, 229);
+    strip.setPixelColor(End - 2, 52, 235, 229);
+    
+    strip.show();
+    delay(30);
+    clear();
+    
   }
+  
 }
