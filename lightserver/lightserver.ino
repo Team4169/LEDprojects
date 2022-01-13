@@ -327,3 +327,15 @@ void clear(){
   }
   strip.show();
 }
+
+void cascading(){
+  for(int i =0; i<strip.numPixels(); i++){
+    strip.setPixelcolor(i, 235, 64, 52)
+    strip.setPixelcolor(i + 1, 235, 64, 52)
+    strip.setPixelcolor(i + 2, 235, 64, 52)
+    int end = strip.NumPixels - i
+    strip.setPixelcolor(end, 52, 235, 229)
+    strip.setPixelcolor(end - 1, 52, 235, 229)
+    strip.setPixelcolor(end - 2, 52, 235, 229)
+  }
+}
