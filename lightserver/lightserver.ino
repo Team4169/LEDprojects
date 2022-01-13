@@ -144,7 +144,7 @@ void setLights(bool brake, bool left, bool right) {
   }
 }
 
-void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow, bool pOrtals, bool $witch){
+void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow, bool pOrtals, bool Switch){
   if (green_flash){
     greenflash();
   }else if(redTrail){
@@ -155,25 +155,26 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow,
     Come();
   }else if (pOrtals){
     portals();
-  }else if ($witch){
-    switch();
+  }else if (Switch){
+    switche();
   }
 }
 
-void switch(){
+void switche(){
   int pixel = 0;
-  int switch = 0;
-  for (int i = 0; i < 7; i++){
-    if (switch % 2 = 0){
+  int switche = 0;
+  for (int i = 0; i < 150; i++){
+    if (switche % 2 == 0 && pixel != 0){
       strip.setPixelColor(pixel, 255, 0, 0);
     }else{
-      strip.setPixelColor(pixel, 0, 0, 0);
+      strip.setPixelColor(pixel, 0, 255, 0);
     }
     strip.show();
     delay(30);
     if (pixel % 25 == 0){
-      switch += 1;
+      switche += 1;
     }
+    pixel+= 1;
   }
 }
 
