@@ -149,7 +149,7 @@ void light_display(bool green_flash, bool redTrail, bool blueline, bool rainbow)
   }else if(redTrail){
     redtrail();
   }else if (blueline){
-    BlueLine();
+    cascading();
   }else if (rainbow){
     rainbOw();
   }
