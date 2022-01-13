@@ -67,6 +67,7 @@ void setup() {
   strip.setBrightness(50);
   strip.show(); // Initialize all pixels to 'off'
   allPurple();
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -200,7 +201,7 @@ void Come(){
       strip.show();
       delay(15);
     }
-    for (int i = 75; i < 0; i--){
+    for (int i = 75; i > 0; i--){
       strip.setPixelColor(i, 0,0, 0);
       strip.setPixelColor(150-i, 0, 0, 0);
       strip.show();
