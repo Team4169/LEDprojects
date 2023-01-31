@@ -83,11 +83,11 @@ void loop() {
  // the receiveEvent() function will be called (since it was
  // set up that way in our Wire.onReceive(receiveEvent) call in setup() above
  if (currentCommand == COMMAND1) {
-   theaterChaseRainbow(0);   
+   theaterChaseRainbow(0, 1);   
  } else if (currentCommand == COMMAND2) {
-   redGreenTrail(50);
+   redGreenTrail(50, 2);
  }else if (currentCommand == COMMAND3) {
-   flashBlueRedGreen(250);
+   flashBlueRedGreen(250, 3);
  }else{
   //  strip.clear();
  }
@@ -120,30 +120,52 @@ void receiveEvent(int howMany) {
  // strip.show();
 }
  
-void redGreenTrail(int wait){
+void checkForNewDesign(int showingCommand){
+  if (showingCommand == currentCommand){
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+void redGreenTrail(int wait, int commandNumber){
  strip.clear();
  for (int i = 0; i < strip.numPixels(); i+=2){
    strip.setPixelColor(i, 255, 0, 0);
    strip.setPixelColor(i+1, 0, 255, 0);
    strip.show();
+   if (checkForNewDesign(commandNumber) == false){ //don't know if this works
+     break;
+   }
    delay(wait);
  }
  
 }
-void flashBlueRedGreen(int wait){
+
+void flashBlueRedGreen(int wait, int commandNumber){
  strip.clear();
  for (int i = 0; i< strip.numPixels(); i++){
    strip.setPixelColor(i, 0, 0, 255); 
+   if (checkForNewDesign(commandNumber) == false){ //don't know if this works
+     break;
+   }
  }
  strip.show();
  delay(wait);
  for (int i = 0; i< strip.numPixels(); i++){
    strip.setPixelColor(i, 255, 0, 0); 
+   if (checkForNewDesign(commandNumber) == false){ //don't know if this works
+     break;
+   }
  }
  strip.show();
  delay(wait);
  for (int i = 0; i< strip.numPixels(); i++){
    strip.setPixelColor(i, 0, 255, 0); 
+   if (checkForNewDesign(commandNumber) == false){ //don't know if this works
+     break;
+   }
  }
  strip.show();
  delay(wait);
@@ -151,7 +173,7 @@ void flashBlueRedGreen(int wait){
  
  
 // Rainbow-enhanced theater marquee. Pass delay time (in ms) between frames.
-void theaterChaseRainbow(int wait) {
+void theaterChaseRainbow(int wait, int commandNumber) {
  int firstPixelHue = 0;     // First pixel starts at red (hue 0)
  for(int a=0; a<30; a++) {  // Repeat 30 times...
    for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
@@ -164,12 +186,21 @@ void theaterChaseRainbow(int wait) {
        int      hue   = firstPixelHue + c * 65536L / strip.numPixels();
        uint32_t color = strip.gamma32(strip.ColorHSV(hue)); // hue -> RGB
        strip.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+
+       if (checkForNewDesign(commandNumber) == false){ //don't know if this works
+        break;
+       }
      }
+     if (checkForNewDesign(commandNumber) == false){ //don't know if this works
+      break;
+     }
+
      strip.show();                // Update strip with new contents
      delay(wait);                 // Pause for a moment
      firstPixelHue += 65536 / 90; // One cycle of color wheel over 90 frames
    }
+   if (checkForNewDesign(commandNumber) == false){ //don't know if this works
+     break;
+   }
  }
 }
-
-
