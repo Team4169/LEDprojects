@@ -59,8 +59,8 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_PIXELS, LED_STRIP_PIN, NEO_GRB +
 void setup() {
  Wire.begin(SLAVE_ADDRESS);    // join i2c bus, using the specified address as ours
  Wire.onReceive(receiveEvent); // register event
- Serial.begin(9600);           // start serial for debugging output
- Serial.println("Setting up");
+//  Serial.begin(9600);           // start serial for debugging output
+//  Serial.println("Setting up");
  
  // now initialize the LED strip
  strip.begin();
@@ -83,14 +83,17 @@ void loop() {
  // the receiveEvent() function will be called (since it was
  // set up that way in our Wire.onReceive(receiveEvent) call in setup() above
  if (currentCommand == COMMAND1) {
-   theaterChaseRainbow(0, 1);   
+  //  Serial.println("Solid Red Lights");
+   showRed(COMMAND1);  
  } else if (currentCommand == COMMAND2) {
-   redGreenTrail(50, 2);
+   showBlue(COMMAND2);
  }else if (currentCommand == COMMAND3) {
-   flashBlueRedGreen(250, 3);
- }else{
-  //  strip.clear();
- }
+   redTrail(COMMAND3);
+ }else if (currentCommand == COMMAND4) {
+   blueTrail(COMMAND4);
+  }//else{
+//    strip.clear();
+//  }
 }
  
 volatile boolean stop_animation = false;
@@ -101,33 +104,96 @@ void receiveEvent(int howMany) {
  int command = Wire.read(); // receive the command (a single byte as a character)
  stop_animation = true; // cancel any previously running animation
 //  char secondcommand = Wire.read();
- Serial.print("howMany: ");
- Serial.println(howMany);
- Serial.print("recieved: ");
- Serial.println(command);
+//  Serial.print("howMany: ");
+//  Serial.println(howMany);
+//  Serial.print("recieved: ");
+//  Serial.println(command);
 //  Serial.println(secondcommand);
- strip.clear();
+//  strip.clear();
  if (command == COMMAND1) {
    currentCommand = COMMAND1;   
  } else if (command == COMMAND2) {
    currentCommand = COMMAND2;
  } else if (command == COMMAND3) {
    currentCommand = COMMAND3;
+ } else if (command == COMMAND4) {
+   currentCommand = COMMAND4;
  }
- // } else if (command == COMMAND4) {
- //   right_signal();
- // }
- // strip.show();
+//  strip.show();
 }
  
-void checkForNewDesign(int showingCommand){
+bool checkForNewDesign(int showingCommand){
+  //  Serial.println("Checking for new");
+
   if (showingCommand == currentCommand){
     return true;
   } else {
+    strip.clear();
     return false;
   }
 
 }
+
+void showBlue(int commandNumber){
+  if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+  for (int i = 0; i < strip.numPixels(); i ++){
+    strip.setPixelColor(i, 0, 255, 255);
+  }
+  strip.show();
+}
+
+void showRed(int commandNumber){
+  if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+  for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 255, 0, 0);
+  }
+  strip.show();
+}
+
+void blueTrail(int commandNumber){
+  strip.clear();
+  for (int i = 0; i < strip.numPixels(); i ++){
+    strip.setPixelColor(i, 0, 0, 255);
+    strip.show();
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+    delay(30);
+  }
+  for (int i = 0; i < strip.numPixels(); i ++){
+    strip.setPixelColor(i, 0, 0, 0);
+    strip.show();
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+    delay(30);
+  }
+}
+
+void redTrail(int commandNumber){
+  strip.clear();
+  for (int i = 0; i < strip.numPixels(); i ++){
+    strip.setPixelColor(i, 255, 0, 0);
+    strip.show();
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+    delay(30);
+  }
+  for (int i = 0; i < strip.numPixels(); i ++){
+    strip.setPixelColor(i, 0, 0, 0);
+    strip.show();
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+    delay(30);
+  }
+}
+
 
 void redGreenTrail(int wait, int commandNumber){
  strip.clear();
@@ -143,6 +209,8 @@ void redGreenTrail(int wait, int commandNumber){
  
 }
 
+
+//these are not going to be used, but are here anyway
 void flashBlueRedGreen(int wait, int commandNumber){
  strip.clear();
  for (int i = 0; i< strip.numPixels(); i++){
