@@ -23,6 +23,15 @@ const char COMMAND1 = 1;
 const char COMMAND2 = 2;
 const char COMMAND3 = 3;
 const char COMMAND4 = 4;
+const char COMMAND5 = 5;
+const char COMMAND6 = 6;
+const char COMMAND7 = 7;
+const char COMMAND8 = 8;
+// const char COMMAND9 = 9;
+// const char COMMAND10 = 10;
+// const char COMMAND11 = 11;
+// const char COMMAND12 = 12;
+
  
 // Example code for controlling the LED strip can be found in
 // Exampes/Adafruit NeoPixel/...
@@ -55,7 +64,8 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_PIXELS, LED_STRIP_PIN, NEO_GRB +
 // and minimize distance between Arduino and first pixel.  Avoid connecting
 // on a live circuit...if you must, connect GND first.
  
- 
+int currentCommand = 0;
+
 void setup() {
  Wire.begin(SLAVE_ADDRESS);    // join i2c bus, using the specified address as ours
  Wire.onReceive(receiveEvent); // register event
@@ -65,16 +75,17 @@ void setup() {
  // now initialize the LED strip
  strip.begin();
  strip.setBrightness(50);
- for (int i = 0; i < strip.numPixels(); i ++){
-   strip.setPixelColor(i, 255, 0, 255);
- }
- strip.show(); // Initialize all pixels to 'off'
- 
- 
+//  for (int i = 0; i < strip.numPixels(); i ++){
+//    strip.setPixelColor(i, 255, 0, 225);
+//  }
+//  strip.show(); // Initialize all pixels to 'off'
+  while (currentCommand == 0){
+    blueFade(0);
+  }
+  
 }
  
-int currentCommand = 0;
- 
+
  
  
 void loop() {
@@ -91,7 +102,27 @@ void loop() {
    redTrail(COMMAND3);
  }else if (currentCommand == COMMAND4) {
    blueTrail(COMMAND4);
-  }//else{
+ }else if (currentCommand == COMMAND5) {
+   blueFade(COMMAND5);
+ }else if (currentCommand == COMMAND6) {
+   redFade(COMMAND6);
+ }else if (currentCommand == COMMAND7) {
+   idk2(COMMAND7);
+ }else if (currentCommand == COMMAND8) {
+   idk3(COMMAND8);
+ }//else if (currentCommand == COMMAND9) {
+//    idk4(COMMAND9);
+//  }else if (currentCommand == COMMAND10) {
+//    idk5(COMMAND10);
+//  }else if (currentCommand == COMMAND11) {
+//    idk6(COMMAND11);
+//  }else if (currentCommand == COMMAND12) {
+//    idk7(COMMAND12);
+//  }
+  
+  
+  
+  //else{
 //    strip.clear();
 //  }
 }
@@ -118,7 +149,23 @@ void receiveEvent(int howMany) {
    currentCommand = COMMAND3;
  } else if (command == COMMAND4) {
    currentCommand = COMMAND4;
- }
+ } else if (command == COMMAND5) {
+   currentCommand = COMMAND5;
+ } else if (command == COMMAND6) {
+   currentCommand = COMMAND6;
+ }else if (command == COMMAND7) {
+   currentCommand = COMMAND7;
+ } else if (command == COMMAND8) {
+   currentCommand = COMMAND8;
+ } //else if (command == COMMAND9) {
+//    currentCommand = COMMAND9;
+//  } else if (command == COMMAND10) {
+//    currentCommand = COMMAND10;
+//  } else if (command == COMMAND11) {
+//    currentCommand = COMMAND11;
+//  }else if (command == COMMAND12) {
+//    currentCommand = COMMAND12;
+//  }
 //  strip.show();
 }
  
@@ -132,6 +179,65 @@ bool checkForNewDesign(int showingCommand){
     return false;
   }
 
+}
+
+
+
+
+void blueFade(int commandNumber){
+  for (int brightness = 10; brightness < 255; brightness++){
+    for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 0, 0, brightness);
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+   if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+  }
+  strip.show();
+  }
+  for (int brightness = 255; brightness > 10; brightness--){
+    for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 0, 0, brightness);
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+   if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+  }
+  strip.show();
+  }
+  delay(30);
+}
+
+void redFade(int commandNumber){
+  for (int brightness = 10; brightness < 255; brightness++){
+    for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, brightness, 0, 0);
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+   if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+  }
+  strip.show();
+  }
+  for (int brightness = 255; brightness > 10; brightness--){
+    for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, brightness, 0, 0);
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+   if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+  }
+  strip.show();
+  }
+  delay(30);
 }
 
 void showBlue(int commandNumber){
@@ -207,6 +313,43 @@ void redGreenTrail(int wait, int commandNumber){
    delay(wait);
  }
  
+}
+
+void idk2(int commandNumber){
+  for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 200, 200, 200);
+  }
+  strip.show();
+}
+void idk3(int commandNumber){
+  for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 100, 0, 100);
+  }
+  strip.show();
+}
+void idk4(int commandNumber){
+  for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 0, 100, 100);
+  }
+  strip.show();
+}
+void idk5(int commandNumber){
+  for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 100, 100, 0);
+  }
+  strip.show();
+}
+void idk6(int commandNumber){
+  for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 100, 0, 100);
+  }
+  strip.show();
+}
+void idk7(int commandNumber){
+  for (int i = 0; i < strip.numPixels(); i++){
+    strip.setPixelColor(i, 200, 100, 200);
+  }
+  strip.show();
 }
 
 
