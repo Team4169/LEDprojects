@@ -47,7 +47,7 @@ const char COMMAND8 = 8;
 #define LED_STRIP_PIN 6
  
 // define the length of the LED strip (number of pixels)
-#define NUM_PIXELS 150
+#define NUM_PIXELS 73 //total strip is 150 (it is now cut)
  
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
