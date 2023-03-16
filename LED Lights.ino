@@ -97,17 +97,17 @@ void loop() {
   //  Serial.println("Solid Red Lights");
    showRed(COMMAND1);  
  } else if (currentCommand == COMMAND2) {
-   showBlue(COMMAND2);
+   redTrail(COMMAND2);
  }else if (currentCommand == COMMAND3) {
-   redTrail(COMMAND3);
+   redFade(COMMAND3);
  }else if (currentCommand == COMMAND4) {
-   blueTrail(COMMAND4);
+   showBlue(COMMAND4);
  }else if (currentCommand == COMMAND5) {
-   blueFade(COMMAND5);
+   blueTrail(COMMAND5);
  }else if (currentCommand == COMMAND6) {
-   redFade(COMMAND6);
+   blueFade(COMMAND6);
  }else if (currentCommand == COMMAND7) {
-   idk2(COMMAND7);
+   blueTwinkle(COMMAND7);
  }else if (currentCommand == COMMAND8) {
    idk3(COMMAND8);
  }//else if (currentCommand == COMMAND9) {
@@ -180,9 +180,6 @@ bool checkForNewDesign(int showingCommand){
   }
 
 }
-
-
-
 
 void blueFade(int commandNumber){
   for (int brightness = 10; brightness < 255; brightness++){
@@ -297,6 +294,28 @@ void redTrail(int commandNumber){
      return;
    }
     delay(30);
+  }
+}
+
+void blueTwinkle(int commandNumber){
+  int spacing = 0;
+  int color = 0;
+  for (int i = 0; i < strip.numPixels(); i++){
+    spacing = random(0, 5);
+    if (spacing + i > strip.numPixels()){
+      i = strip.numPixels();
+    }else{
+      i += spacing;
+    }
+    
+    color = random(0, 1);
+    if (color == 0){
+      strip.setPixelColor(i, 50, 20, 255);
+    }else{
+      strip.setPixelColor(i, 0, 0, 0);
+    } 
+    strip.show();
+    delay(100);
   }
 }
 
