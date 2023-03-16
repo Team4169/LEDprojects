@@ -107,7 +107,7 @@ void loop() {
  }else if (currentCommand == COMMAND6) {
    blueFade(COMMAND6);
  }else if (currentCommand == COMMAND7) {
-   blueTwinkle(COMMAND7);
+   greenTrail(COMMAND7);
  }else if (currentCommand == COMMAND8) {
    idk3(COMMAND8);
  }//else if (currentCommand == COMMAND9) {
@@ -296,6 +296,27 @@ void redTrail(int commandNumber){
     delay(30);
   }
 }
+
+void greenTrail(int commandNumber){
+  strip.clear();
+  for (int i = 0; i < strip.numPixels(); i ++){
+    strip.setPixelColor(i, 0, 255, 0);
+    strip.show();
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+    delay(30);
+  }
+  for (int i = 0; i < strip.numPixels(); i ++){
+    strip.setPixelColor(i, 0, 0, 0);
+    strip.show();
+    if (checkForNewDesign(commandNumber) == false){ 
+     return;
+   }
+    delay(30);
+  }
+}
+
 
 void blueTwinkle(int commandNumber){
   int spacing = 0;
